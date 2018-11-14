@@ -12,7 +12,7 @@ export class ExampleResolvers {
   }
 
   @Query()
-  @UseGuards(new AuthGuard)
+  @UseGuards(new AuthGuard())
   async forbidden() {
     return 'Welcome, you\'ve hacked your way through.';
   }
@@ -23,7 +23,7 @@ export class ExampleResolvers {
   }
 
   @Query()
-  @UsePipes(new ValidationPipe)
+  @UsePipes(new ValidationPipe())
   async validationError() {
     return 'Validation error.';
   }

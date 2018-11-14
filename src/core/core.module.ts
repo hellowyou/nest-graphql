@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ValidationPipe } from './validation/validation.pipe';
 
 @Module({
   // declarations:

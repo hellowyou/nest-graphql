@@ -8,8 +8,8 @@ import { LoggingInterceptor } from '../core';
     ExampleResolvers,
     {
       provide: APP_INTERCEPTOR,
-      useClass: LoggingInterceptor
-    }
-  ]
+      useClass: LoggingInterceptor,
+    },
+  ],
 })
 export class ExampleModule {}

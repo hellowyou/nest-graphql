@@ -11,5 +11,4 @@ export class ValidationPipe implements PipeTransform {
   }
 }
 
-
 export class ValidationError extends Error {}
