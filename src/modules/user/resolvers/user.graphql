@@ -1,0 +1,55 @@
+type User {
+  id: ID!
+  # User's First Name.
+  firstName: String
+  # User's Last Name.
+  lastName: String
+  # User's email.
+  email: String
+  createdAt: String
+  updatedAt: String
+}
+
+input CreateUserInput {
+  # User's First Name.
+  firstName: String!
+  # User's Last Name.
+  lastName: String!
+  # __TODO__: decision to make email as required.
+  email: String!
+  # The user's password.
+  password: String!
+}
+
+input UpdateUserInput {
+  id: ID!
+  # User's First Name.
+  firstName: String
+  # User's Last Name.
+  lastName: String
+  # __TODO__: decision to make email as required.
+  email: String
+  # The user's password.
+  password: String
+}
+
+type Query {
+  # Get a user by id.
+  user(id: ID!): User
+  """
+  __TODO__: Better input filter for this collection.
+  __first__: In other words limit.
+  __after__: Get users after the given user id.
+  __skip__: Skip the number of items.
+  """
+  users(first: Int = 10, after: ID, skip: Int = 0): [User!]
+}
+
+type Mutation {
+  # Create a user.
+  createUser(data: CreateUserInput!): User
+  # Update a user.
+  updateUser(data: UpdateUserInput!): User!
+  # Delete a user.
+  deleteUser(id: ID!): User!
+}

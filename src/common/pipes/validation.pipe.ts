@@ -1,11 +1,11 @@
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
-import { ModelNotFoundException } from '../exceptions';
+import { EntityNotFoundException } from '../exceptions';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform {
   transform(value: string, metadata: ArgumentMetadata) {
     // TODO: Fix not throwing the exception.
-    throw new ModelNotFoundException();
+    throw new EntityNotFoundException();
 
     return true;
   }

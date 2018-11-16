@@ -1,7 +1,0 @@
-type Query {
-  forbidden: String!
-  allowed: String!
-  ctxUser: String!
-  validationError: String
-  hello(name: String): String!
-}

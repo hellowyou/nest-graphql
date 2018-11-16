@@ -13,10 +13,10 @@ export class LoggingInterceptor implements NestInterceptor {
     const { fieldName } = ctx.getInfo();
     const now = Date.now();
 
-    console.log(`Before ${fieldName}...`);
+    console.log(`Before ${fieldName}...`); //tslint:disable-line
 
     return call$.pipe(
-      tap(() => console.log(`After ${fieldName}... ${Date.now() - now}ms`)),
+      tap(() => console.log(`After ${fieldName}... ${Date.now() - now}ms`)), //tslint:disable-line
     );
   }
 }

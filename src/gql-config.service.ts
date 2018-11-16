@@ -8,8 +8,9 @@ export class GqlConfigService {
     return {
       typePaths: ['./**/*.graphql'],
       installSubscriptionHandlers: true,
+      tracing: true,
       definitions: {
-        path: join(process.cwd(), 'src/graphql.d.ts'),
+        path: join(process.cwd(), 'src/generated/graphql.ts'),
         outputAs: 'class',
       },
       context: req => ({ ...req, user: { name: 'UserDummy', id: 1 } }),

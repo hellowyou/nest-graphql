@@ -8,7 +8,7 @@ export class AuthGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const gqlCtx = GqlExecutionContext.create(context);
-
+    console.log({ gqlCtx }); //tslint:disable-line
     return false;
   }
 }

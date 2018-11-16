@@ -3,6 +3,7 @@ node_modules/
 .DS_STORE/
 .vs_code/
 tmp/
+coverage/
 
 yarn-error*
 .env*
