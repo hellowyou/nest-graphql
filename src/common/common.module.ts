@@ -3,8 +3,7 @@ import { LoggerService } from './services/logger.service';
 
 @Module({
   // declarations:
-  // exports: [ValidationPipe]
-
   providers: [LoggerService],
+  exports: [LoggerService],
 })
 export class CommonModule {}

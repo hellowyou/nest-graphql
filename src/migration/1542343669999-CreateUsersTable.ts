@@ -25,8 +25,8 @@ export class CreateUsersTable1542343669999 implements MigrationInterface {
         { name: 'lastName', type: 'varchar', length: '100', isNullable },
         { name: 'email', type: 'varchar', length: '254' },
         { name: 'password', type: 'varchar' },
-        new DateTimeColumn({ name: 'createdAt' } as TableColumnOptions),
-        new DateTimeColumn({ name: 'updatedAt' } as TableColumnOptions),
+        new DateTimeColumn({ name: 'createdAt' }),
+        new DateTimeColumn({ name: 'updatedAt' }),
       ],
     });
 

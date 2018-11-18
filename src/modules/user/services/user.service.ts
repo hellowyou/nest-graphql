@@ -1,10 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { validate } from 'class-validator';
 
 import { UserEntity } from '../entities';
 import { CreateUserDto } from '../dto/create-user-dto';
-import { EntityNotFoundException } from '../../../common';
+import {
+  EntityNotFoundException,
+  LoggerService,
+  ValidationException,
+} from '../../../common';
 
 export interface IFindUsers {
   first: number;
@@ -17,6 +22,7 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    private readonly logger: LoggerService,
   ) {}
 
   // TODO: Use Dataloader
@@ -49,11 +55,6 @@ export class UserService {
 
   async createUser(data: CreateUserDto): Promise<UserEntity> {
     const user = this.userRepository.create(data);
-
-    if (await this.emailExists(data.email)) {
-      // TODO: make custom error for this.
-      throw new Error('Email already exists');
-    }
 
     return this.userRepository.save(user);
   }

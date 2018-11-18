@@ -8,12 +8,25 @@ export class GqlConfigService {
     return {
       typePaths: ['./**/*.graphql'],
       installSubscriptionHandlers: true,
-      tracing: true,
       definitions: {
         path: join(process.cwd(), 'src/generated/graphql.ts'),
-        outputAs: 'class',
+        outputAs: 'interface',
       },
-      context: req => ({ ...req, user: { name: 'UserDummy', id: 1 } }),
+      context: this.getContext,
+      formatError: this.formatError,
+    };
+  }
+
+  getContext(req) {
+    return { ...req, user: { name: 'UserDummy', id: 1 } };
+  }
+
+  formatError(err) {
+    const { originalError } = err;
+    const data = originalError.fields || [];
+
+    return {
+      ...err,
     };
   }
 }

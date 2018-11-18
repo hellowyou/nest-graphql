@@ -1,11 +1,11 @@
-export class CreateUserInput {
+export interface CreateUserInput {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
 }
 
-export class UpdateUserInput {
+export interface UpdateUserInput {
   id: string;
   firstName?: string;
   lastName?: string;
@@ -13,27 +13,23 @@ export class UpdateUserInput {
   password?: string;
 }
 
-export abstract class IMutation {
-  abstract createUser(data: CreateUserInput): User | Promise<User>;
-
-  abstract updateUser(data: UpdateUserInput): User | Promise<User>;
-
-  abstract deleteUser(id: string): User | Promise<User>;
+export interface IMutation {
+  createUser(data: CreateUserInput): User | Promise<User>;
+  updateUser(data: UpdateUserInput): User | Promise<User>;
+  deleteUser(id: string): User | Promise<User>;
 }
 
-export abstract class IQuery {
-  abstract user(id: string): User | Promise<User>;
-
-  abstract users(
+export interface IQuery {
+  user(id: string): User | Promise<User>;
+  users(
     first?: number,
     after?: string,
     skip?: number,
   ): User[] | Promise<User[]>;
-
-  abstract temp__(): boolean | Promise<boolean>;
+  temp__(): boolean | Promise<boolean>;
 }
 
-export class User {
+export interface User {
   id: string;
   firstName?: string;
   lastName?: string;

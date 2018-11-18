@@ -5,3 +5,4 @@ export * from './interceptors';
 export * from './pipes';
 export * from './constants';
 export * from './common.module';
+export * from './services';

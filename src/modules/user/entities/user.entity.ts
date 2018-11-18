@@ -15,16 +15,13 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 50 })
+  @Column()
   firstName: string;
 
-  @Column({ length: 50 })
+  @Column()
   lastName: string;
 
-  @Column({
-    length: 50,
-    unique: true,
-  })
+  @Column()
   email: string;
 
   @Column()

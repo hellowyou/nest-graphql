@@ -1,7 +1,9 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { UserService } from '../services/user.service';
-import { UseGuards } from '@nestjs/common';
+import { UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+
 import { AuthGuard } from '../../../common';
+import { UserService } from '../services/user.service';
+import { CreateUserDataDto, CreateUserDto } from '../dto';
 
 @Resolver('User')
 export class UserResolvers {
@@ -18,18 +20,22 @@ export class UserResolvers {
 
   @Mutation()
   @UseGuards(AuthGuard)
-  createUser(@Args('data') data) {
+  @UsePipes(
+    new ValidationPipe({ validationError: { target: false, value: false } }),
+  )
+  // TODO: Validation must return root key 'data' if validation failed.
+  createUser(@Args('data') data: CreateUserDto) {
     return this.userService.createUser(data);
   }
 
   @Mutation()
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   updateUser(@Args('data') { id, ...update }) {
     return this.userService.updateUser(id, update);
   }
 
   @Mutation()
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   deleteUser(@Args('id') id) {
     return this.userService.deleteUser(id);
   }
