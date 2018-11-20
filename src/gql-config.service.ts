@@ -7,6 +7,7 @@ export class GqlConfigService {
   createGqlOptions(): GqlModuleOptions {
     return {
       typePaths: ['./**/*.graphql'],
+      typeDefs: [`scalar Upload`],
       installSubscriptionHandlers: true,
       definitions: {
         path: join(process.cwd(), 'src/generated/graphql.ts'),

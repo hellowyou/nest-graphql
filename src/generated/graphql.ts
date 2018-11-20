@@ -88,3 +88,5 @@ export interface Video {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export type Upload = any;
