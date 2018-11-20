@@ -1,0 +1,36 @@
+type Video {
+  id: ID!
+  title: String
+  description: String
+  genres: [Genre!]!
+  createdAt: String
+  updatedAt: String
+}
+
+input CreateVideoInput {
+  title: String!
+  description: String!
+  # An array of genre id.
+  genres: [ID!]
+}
+
+input UpdateVideoInput {
+  # The video id to update.
+  id: ID!
+  title: String
+  description: String
+  # An array of genre id.
+  genres: [ID!]
+}
+
+type Mutation {
+  createVideo(data: CreateVideoInput!): Video
+  updateVideo(data: UpdateVideoInput!): Video!
+  deleteVideo(id: ID!): Video!
+}
+
+type Query {
+  video(id: ID!): Video!
+  videos(first: Int = 10, skip: Int = 0, after: ID): [Video!]!
+  # publishedVideos(first: Int = 10, skip: Int = 0, after: ID, genres: [String]): [Video!]!
+}

@@ -5,4 +5,6 @@ export const REPOSITORY_TOKENS = {
 
 export const TABLE_NAMES = {
   USERS: 'users',
+  VIDEOS: 'videos',
+  GENRES: 'genres',
 };

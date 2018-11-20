@@ -10,6 +10,6 @@ async function bootstrap() {
   await app.listen(port);
 
   const logger = app.get(LoggerService);
-  logger.info(`Server running on http://localhost:${4000}`);
+  logger.info(`Server running on http://localhost:${port}`);
 }
 bootstrap();

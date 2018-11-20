@@ -1,0 +1,18 @@
+type Genre {
+  id: ID!
+  title: String!
+  slug: String!
+  videos: [Video!]!
+}
+
+type Mutation {
+  # If ni exists na ang title, append ug number
+  createGenre(title: String!, slug: String): Genre
+  updateGenre(id: ID!, title: String, slug: String): Genre
+  deleteGenre(id: ID!): Genre
+}
+
+type Query {
+  genre(id: ID!): Genre
+  genres(first: Int = 10, skip: Int = 0, after: ID): [Genre]!
+}

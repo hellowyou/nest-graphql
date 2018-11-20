@@ -5,6 +5,7 @@ import { CommonModule } from './common/common.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { VideoModule } from './modules/video/video.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from './modules/auth/auth.module';
     UserModule,
     CommonModule,
     AuthModule,
+    VideoModule,
   ],
   controllers: [],
   providers: [GqlConfigService],
