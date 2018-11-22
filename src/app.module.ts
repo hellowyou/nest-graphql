@@ -7,11 +7,14 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { VideoModule } from './modules/video/video.module';
 import { DatabaseModule } from './modules/database/database.module';
+import { LoggerService } from './common';
 
 @Module({
   imports: [
     GraphQLModule.forRootAsync({
+      imports: [CommonModule],
       useClass: GqlConfigService,
+      inject: [LoggerService],
     }),
     CommonModule,
     UserModule,
