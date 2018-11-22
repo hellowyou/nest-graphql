@@ -1,3 +1,8 @@
+export enum AuthStrategy {
+  EMAIL_PASSWORD = 'EMAIL_PASSWORD',
+  FACEBOOK = 'FACEBOOK',
+}
+
 export interface CreateUserInput {
   firstName: string;
   lastName: string;
@@ -9,6 +14,20 @@ export interface CreateVideoInput {
   title: string;
   description: string;
   genres: string[];
+}
+
+export interface SigninInput {
+  strategy: AuthStrategy;
+  email: string;
+  password: string;
+}
+
+export interface SignupInput {
+  strategy: AuthStrategy;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface UpdateUserInput {
@@ -26,6 +45,11 @@ export interface UpdateVideoInput {
   genres: string[];
 }
 
+export interface AuthPayload {
+  token: string;
+  user: User;
+}
+
 export interface Genre {
   id: string;
   title: string;
@@ -34,6 +58,8 @@ export interface Genre {
 }
 
 export interface IMutation {
+  signin(data: SigninInput): AuthPayload | Promise<AuthPayload>;
+  signup(data: SignupInput): AuthPayload | Promise<AuthPayload>;
   createUser(data: CreateUserInput): User | Promise<User>;
   updateUser(data: UpdateUserInput): User | Promise<User>;
   deleteUser(id: string): User | Promise<User>;

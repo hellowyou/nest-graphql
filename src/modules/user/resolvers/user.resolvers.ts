@@ -1,9 +1,10 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
 
-import { AuthGuard } from '../../../common';
+// import { AuthGuard } from '../../../common';
 import { UserService } from '../services/user.service';
 import { CreateUserDataDto, CreateUserDto } from '../dto';
+import { GqlAuthGuard } from '../../../common';
 
 @Resolver('User')
 export class UserResolvers {
@@ -19,7 +20,7 @@ export class UserResolvers {
   }
 
   @Mutation()
-  @UseGuards(AuthGuard)
+  @UseGuards(GqlAuthGuard)
   @UsePipes(
     new ValidationPipe({ validationError: { target: false, value: false } }),
   )

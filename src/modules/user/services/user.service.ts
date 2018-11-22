@@ -1,15 +1,11 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { validate } from 'class-validator';
+import * as bcrypt from 'bcrypt';
 
 import { UserEntity } from '../entities';
 import { CreateUserDto } from '../dto/create-user-dto';
-import {
-  EntityNotFoundException,
-  LoggerService,
-  ValidationException,
-} from '../../../common';
+import { EntityNotFoundException, LoggerService } from '../../../common';
 
 export interface IFindUsers {
   first: number;
@@ -19,6 +15,16 @@ export interface IFindUsers {
 
 @Injectable()
 export class UserService {
+  get saltRounds(): number {
+    // TODO: Make a config service to get all the configurations.
+    let rounds = parseInt(process.env.SALT_ROUNDS, 10);
+
+    if (isNaN(rounds)) {
+      rounds = 8;
+    }
+
+    return rounds;
+  }
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
@@ -56,6 +62,10 @@ export class UserService {
   async createUser(data: CreateUserDto): Promise<UserEntity> {
     const user = this.userRepository.create(data);
 
+    if (data.password) {
+      await this.setPassword(user, data.password);
+    }
+
     return this.userRepository.save(user);
   }
 
@@ -66,6 +76,10 @@ export class UserService {
     }
 
     user = Object.assign({}, user, update);
+
+    if (update.password) {
+      await this.setPassword(user, update.password);
+    }
 
     return this.userRepository.save(user);
   }
@@ -82,5 +96,32 @@ export class UserService {
 
   createQueryBuilder() {
     return this.userRepository.createQueryBuilder();
+  }
+
+  /**
+   * Hashes the given password to the given user.
+   *
+   * @param {UserEntity} user The user entity to set password.
+   * @param {string} password The password.
+   * @return {Promise<UserEntity>}
+   */
+  protected async setPassword(
+    user: UserEntity,
+    password: string,
+  ): Promise<UserEntity> {
+    user.password = await bcrypt.hash(password, this.saltRounds);
+
+    return user;
+  }
+
+  /**
+   * Check whether the plain password matches the encrypted string.
+   *
+   * @param plainPassword The plain password to compare.
+   * @param hashedPassword The hashed password to compare.
+   * @return {Promise<boolean>}
+   */
+  validatePassword(plainPassword: string, hashedPassword): Promise<boolean> {
+    return bcrypt.compare(plainPassword, hashedPassword);
   }
 }

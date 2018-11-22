@@ -13,5 +13,6 @@ import { CommonModule, LoggerService } from '../../common';
     CommonModule,
   ],
   providers: [UserResolvers, UserService],
+  exports: [UserService],
 })
 export class UserModule {}

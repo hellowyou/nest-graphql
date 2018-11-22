@@ -1,0 +1,30 @@
+enum AuthStrategy {
+  # This strategy requires atleast email and password.
+  EMAIL_PASSWORD
+  # This strategy requires facebook Oauth(no implementations yet.)
+  FACEBOOK
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+input SignupInput {
+  strategy: AuthStrategy!
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+}
+
+input SigninInput {
+  strategy: AuthStrategy!
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  signin(data: SigninInput!): AuthPayload
+  signup(data: SignupInput!): AuthPayload
+}

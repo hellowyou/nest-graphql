@@ -21,7 +21,7 @@ export class UserEntity {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column('varchar', { unique: true })
   email: string;
 
   @Column()
