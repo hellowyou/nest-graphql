@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import slugify from 'slugify';
+
+import { REPOSITORY_TOKENS } from '../../../common';
+
 import { GenreEntity } from '../entities/genre.entity';
 
 export interface IFindGenres {
@@ -13,7 +15,7 @@ export interface IFindGenres {
 @Injectable()
 export class GenreService {
   constructor(
-    @InjectRepository(GenreEntity)
+    @Inject(REPOSITORY_TOKENS.GENRE)
     private readonly genreRepository: Repository<GenreEntity>,
   ) {}
 

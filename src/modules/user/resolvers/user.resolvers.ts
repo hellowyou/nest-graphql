@@ -1,10 +1,10 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
 
-// import { AuthGuard } from '../../../common';
-import { UserService } from '../services/user.service';
-import { CreateUserDataDto, CreateUserDto } from '../dto';
 import { GqlAuthGuard } from '../../../common';
+
+import { UserService } from '../services/user.service';
+import { CreateUserDto } from '../dto';
 
 @Resolver('User')
 export class UserResolvers {

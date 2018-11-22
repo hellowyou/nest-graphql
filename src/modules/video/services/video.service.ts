@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { VideoEntity } from '../entities/video.entity';
+import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
+
+import { EntityNotFoundException, REPOSITORY_TOKENS } from '../../../common';
+
 import { CreateVideoDto } from '../dto/create-video-dto';
-import { EntityNotFoundException } from '../../../common';
+import { VideoEntity } from '../entities/video.entity';
 
 export interface IFindVideos {
   first: number;
@@ -14,7 +15,7 @@ export interface IFindVideos {
 @Injectable()
 export class VideoService {
   constructor(
-    @InjectRepository(VideoEntity)
+    @Inject(REPOSITORY_TOKENS.VIDEO)
     private readonly videoRepository: Repository<VideoEntity>,
   ) {}
   // TODO: Use Dataloader

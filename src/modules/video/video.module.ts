@@ -1,15 +1,22 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { CommonModule } from '../../common';
+import { DatabaseModule } from '../database/database.module';
+
 import { VideoService } from './services/video.service';
 import { VideoResolver } from './resolvers/video.resolvers';
-import { CommonModule } from '../../common';
-import { VideoEntity } from './entities/video.entity';
-import { GenreEntity } from './entities/genre.entity';
 import { GenreService } from './services/genre.service';
 import { GenreResolver } from './resolvers/genre.resolvers';
+import { videoProviders } from './video.providers';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([VideoEntity, GenreEntity]), CommonModule],
-  providers: [VideoService, GenreService, VideoResolver, GenreResolver],
+  imports: [DatabaseModule, CommonModule],
+  providers: [
+    ...videoProviders,
+    VideoService,
+    GenreService,
+    VideoResolver,
+    GenreResolver,
+  ],
 })
 export class VideoModule {}
