@@ -1,22 +1,21 @@
 import { Provider } from '@nestjs/common';
+import { getRepositoryToken, getConnectionToken } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
-
-import { REPOSITORY_TOKENS } from '../../common';
 
 import { VideoEntity } from './entities/video.entity';
 import { GenreEntity } from './entities/genre.entity';
 
 export const videoProviders: Provider[] = [
   {
-    provide: REPOSITORY_TOKENS.VIDEO,
+    provide: getRepositoryToken(VideoEntity),
     useFactory: (connection: Connection) =>
       connection.getRepository(VideoEntity),
-    inject: [REPOSITORY_TOKENS.DB],
+    inject: [getConnectionToken()],
   },
   {
-    provide: REPOSITORY_TOKENS.GENRE,
+    provide: getRepositoryToken(GenreEntity),
     useFactory: (connection: Connection) =>
       connection.getRepository(GenreEntity),
-    inject: [REPOSITORY_TOKENS.DB],
+    inject: [getConnectionToken()],
   },
 ];

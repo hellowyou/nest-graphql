@@ -1,14 +1,14 @@
 import { Provider } from '@nestjs/common';
+import { getRepositoryToken, getConnectionToken } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 
-import { REPOSITORY_TOKENS } from '../../common';
 import { UserEntity } from './entities';
 
 export const userProviders: Provider[] = [
   {
-    provide: REPOSITORY_TOKENS.USER,
+    provide: getRepositoryToken(UserEntity),
     useFactory: (connection: Connection) =>
       connection.getRepository(UserEntity),
-    inject: [REPOSITORY_TOKENS.DB],
+    inject: [getConnectionToken()],
   },
 ];

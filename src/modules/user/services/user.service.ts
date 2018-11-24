@@ -1,14 +1,11 @@
 import { Injectable, Inject } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 import { UserEntity } from '../entities';
 import { CreateUserDto } from '../dto/create-user-dto';
-import {
-  EntityNotFoundException,
-  LoggerService,
-  REPOSITORY_TOKENS,
-} from '../../../common';
+import { EntityNotFoundException, LoggerService } from '../../../common';
 
 export interface IFindUsers {
   first: number;
@@ -29,7 +26,7 @@ export class UserService {
     return rounds;
   }
   constructor(
-    @Inject(REPOSITORY_TOKENS.USER)
+    @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     private readonly logger: LoggerService,
   ) {}

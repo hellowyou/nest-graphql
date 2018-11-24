@@ -1,13 +1,14 @@
-import { createConnection, getConnectionOptions } from 'typeorm';
 import { Provider } from '@nestjs/common';
+import { getConnectionToken } from '@nestjs/typeorm';
+import { createConnection, getConnectionOptions } from 'typeorm';
 import { join } from 'path';
 import { merge } from 'lodash';
 
-import { LoggerService, REPOSITORY_TOKENS } from '../../common';
+import { LoggerService } from '../../common';
 
 export const databaseProviders: Provider[] = [
   {
-    provide: REPOSITORY_TOKENS.DB,
+    provide: getConnectionToken(),
     useFactory: async (logger: LoggerService) => {
       const overrides = {
         entities: [
@@ -16,7 +17,7 @@ export const databaseProviders: Provider[] = [
       };
       const opts = merge(await getConnectionOptions(), overrides);
 
-      logger.info(`Database Options[${REPOSITORY_TOKENS.DB}]: `, opts);
+      logger.info(`Database Options[${getConnectionToken()}]: `, opts);
 
       return await createConnection(opts);
     },
