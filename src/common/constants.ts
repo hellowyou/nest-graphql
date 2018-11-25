@@ -5,3 +5,8 @@ export const TABLE_NAMES = {
 };
 
 export const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
+
+export const NO_TARGET_VALUES = {
+  target: false,
+  value: false,
+};

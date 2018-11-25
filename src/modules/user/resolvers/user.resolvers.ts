@@ -1,10 +1,10 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { UsePipes, ValidationPipe, UseGuards } from '@nestjs/common';
 
-import { GqlAuthGuard } from '../../../common';
+import { GqlAuthGuard, NO_TARGET_VALUES } from '../../../common';
 
 import { UserService } from '../services/user.service';
-import { CreateUserDto } from '../dto';
+import { CreateUserDataDto, UpdateUserDataDto } from '../dto';
 
 @Resolver('User')
 export class UserResolvers {
@@ -21,22 +21,20 @@ export class UserResolvers {
 
   @Mutation()
   @UseGuards(GqlAuthGuard)
-  @UsePipes(
-    new ValidationPipe({ validationError: { target: false, value: false } }),
-  )
-  // TODO: Validation must return root key 'data' if validation failed.
-  createUser(@Args('data') data: CreateUserDto) {
-    return this.userService.createUser(data);
+  @UsePipes(new ValidationPipe({ validationError: NO_TARGET_VALUES }))
+  createUser(@Args() args: CreateUserDataDto) {
+    return this.userService.createUser(args.data);
   }
 
   @Mutation()
-  // @UseGuards(AuthGuard)
-  updateUser(@Args('data') { id, ...update }) {
+  @UseGuards(GqlAuthGuard)
+  @UsePipes(new ValidationPipe({ validationError: NO_TARGET_VALUES }))
+  updateUser(@Args() { data: { id, ...update } }: UpdateUserDataDto) {
     return this.userService.updateUser(id, update);
   }
 
   @Mutation()
-  // @UseGuards(AuthGuard)
+  @UseGuards(GqlAuthGuard)
   deleteUser(@Args('id') id) {
     return this.userService.deleteUser(id);
   }

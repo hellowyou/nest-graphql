@@ -1,5 +1,10 @@
+import { MinLength, IsEmail, ValidateNested, IsDefined } from 'class-validator';
+import { Type } from 'class-transformer';
+
+import { IsUnique } from '../../../common';
 import { CreateUserInput } from '../../../generated/graphql';
-import { MinLength, IsEmail, ValidateNested } from 'class-validator';
+
+import { UserEntity } from '../entities';
 
 export class CreateUserDto implements CreateUserInput {
   @MinLength(2)
@@ -9,10 +14,12 @@ export class CreateUserDto implements CreateUserInput {
   @MinLength(6)
   password;
   @IsEmail()
+  @IsUnique({ entity: UserEntity })
   email;
 }
-// Does not work still
+
 export class CreateUserDataDto {
   @ValidateNested()
+  @Type(() => CreateUserDto)
   data: CreateUserDto;
 }
